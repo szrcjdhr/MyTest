@@ -1,18 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#eeeeee"
+    android:padding="20dp">
     
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/merchant_image_view"
-        android:padding="10dp"/>
+        android:id="@+id/merchant_image_view"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/merchant_name_text_view"
-        android:padding="10dp"/>
+        android:textSize="20sp"
+        android:layout_marginTop="10dp"/>
 
-</RelativeLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/merchant_tag_text_view"
+        android:textSize="12sp"
+        android:layout_marginTop="10dp"/>
+
+
+
+</LinearLayout>

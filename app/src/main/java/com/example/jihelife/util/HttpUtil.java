@@ -25,9 +25,9 @@ public class HttpUtil {
         client.newCall(request).enqueue(callback);
     }
 
-    public static void sendOkHttpPostRequest(String address, JSONObject json, okhttp3.Callback callback) {
+    public static void sendOkHttpPostRequest(String address, RequestBody body, okhttp3.Callback callback) {
         OkHttpClient client = new OkHttpClient();
-        RequestBody body = RequestBody.create(JSON, json.toString());
+//        RequestBody body = RequestBody.create(JSON, json.toString());
         Request request = new Request.Builder().url(address).post(body).build();
         client.newCall(request).enqueue(callback);
     }

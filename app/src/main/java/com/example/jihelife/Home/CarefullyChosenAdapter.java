@@ -2,6 +2,7 @@ package com.example.jihelife.Home;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +15,11 @@ import com.bumptech.glide.Glide;
 import com.example.jihelife.R;
 import com.example.jihelife.gson.Merchant;
 
+import org.json.JSONObject;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by jihelife on 2019/1/9.
@@ -30,12 +35,14 @@ public class CarefullyChosenAdapter extends RecyclerView.Adapter<CarefullyChosen
         View merchantView;
         ImageView merchantImage;
         TextView merchantName;
+        TextView merchantTag;
 
         public ViewHolder(View view) {
             super(view);
             merchantView = view;
             merchantImage = (ImageView)view.findViewById(R.id.merchant_image_view);
             merchantName = (TextView)view.findViewById(R.id.merchant_name_text_view);
+            merchantTag = (TextView)view.findViewById(R.id.merchant_tag_text_view);
         }
     }
 
@@ -58,7 +65,7 @@ public class CarefullyChosenAdapter extends RecyclerView.Adapter<CarefullyChosen
                 Toast.makeText(mContext, merchant.hotelCname, Toast.LENGTH_SHORT).show();
             }
         });
-        return null;
+        return holder;
     }
 
     @Override
@@ -66,6 +73,12 @@ public class CarefullyChosenAdapter extends RecyclerView.Adapter<CarefullyChosen
         Merchant merchant = mMerchantList.get(position);
         Glide.with(mContext).load(merchant.listImg).into(holder.merchantImage);
         holder.merchantName.setText(merchant.hotelCname);
+        StringBuilder builder = new StringBuilder();
+        for (Object obj : merchant.tagList) {
+            Map<String, String> map = (Map<String, String>)obj;
+            builder.append("#"+map.get("tagName")+" ");
+        }
+        holder.merchantTag.setText(builder.toString());
     }
 
     @Override

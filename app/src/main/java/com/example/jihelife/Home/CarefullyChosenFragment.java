@@ -17,7 +17,10 @@ import android.widget.Toast;
 import com.example.jihelife.R;
 import com.example.jihelife.gson.Merchant;
 import com.example.jihelife.util.HttpUtil;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -41,6 +44,8 @@ public class CarefullyChosenFragment extends Fragment {
 
     private RecyclerView recyclerView;
 
+    private CarefullyChosenAdapter adapter;
+
     private int pageNo;
 
     private int pageCnt;
@@ -57,7 +62,7 @@ public class CarefullyChosenFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
-        CarefullyChosenAdapter adapter = new CarefullyChosenAdapter(merchantList);
+        adapter = new CarefullyChosenAdapter(merchantList);
         recyclerView.setAdapter(adapter);
         return view;
     }
@@ -69,17 +74,8 @@ public class CarefullyChosenFragment extends Fragment {
     }
 
     private void requestHomeList(String address) {
-        Log.d("szr-", "requestHomeList: "+address);
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("sortType","1");
-            jsonObject.put("solrType", "1");
-            jsonObject.put("pageno", pageNo);
-            jsonObject.put("pagecnt", pageCnt);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        HttpUtil.sendOkHttpPostRequest(address, jsonObject, new Callback() {
+        RequestBody requestBody = new FormBody.Builder().add("sortType","1").add("solrType", "1").add("pageno", ""+pageNo).add("pagecnt", ""+pageCnt).build();
+        HttpUtil.sendOkHttpPostRequest(address, requestBody, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 e.printStackTrace();
@@ -93,11 +89,24 @@ public class CarefullyChosenFragment extends Fragment {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                String responseText = response.body().string();
+                final String responseText = response.body().string();
                 Log.d("szr-", "onResponse: "+responseText);
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        Gson gson = new Gson();
+                        try {
+                            JSONObject jsonObject = new JSONObject(responseText);
+                            if ("0".equals(jsonObject.getString("sc"))) {
+                                List<Merchant> tempList = gson.fromJson(jsonObject.getString("data"), new TypeToken<List<Merchant>>(){}.getType());
+                                merchantList.addAll(tempList);
+                                adapter.notifyDataSetChanged();
+                            } else {
+                                Toast.makeText(getContext(), jsonObject.getString("ErrorMsg"), Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 });
             }
