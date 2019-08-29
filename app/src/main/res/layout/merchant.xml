@@ -2,28 +2,64 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#eeeeee"
+    android:orientation="vertical"
     android:padding="20dp">
     
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="240dp"
+        android:scaleType="fitXY"
         android:id="@+id/merchant_image_view"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/merchant_name_text_view"
+        android:textColor="#000"
         android:textSize="20sp"
+        android:textStyle="bold"
         android:layout_marginTop="10dp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/merchant_tag_text_view"
-        android:textSize="12sp"
+        android:textSize="14sp"
         android:layout_marginTop="10dp"/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/merchant_price"
+            android:textColor="#D9595E"
+            android:textSize="22sp"
+            android:visibility="invisible"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/merchant_timeprice_tag"
+            android:textColor="#fff"
+            android:text="Time卡"
+            android:background="#3B6E6F"
+            android:textSize="10sp"
+            android:visibility="invisible"
+            android:layout_marginLeft="10dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/merchant_timeprice"
+            android:textColor="#000"
+            android:textSize="16sp"
+            android:visibility="invisible"
+            android:layout_marginLeft="10dp"/>
+
+    </LinearLayout>
 
 </LinearLayout>

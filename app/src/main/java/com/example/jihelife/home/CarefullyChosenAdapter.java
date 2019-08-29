@@ -1,12 +1,10 @@
-package com.example.jihelife.Home;
+package com.example.jihelife.home;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,10 +12,8 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.jihelife.R;
 import com.example.jihelife.gson.Merchant;
+import com.example.jihelife.gson.ProductPriceItem;
 
-import org.json.JSONObject;
-
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,6 +32,9 @@ public class CarefullyChosenAdapter extends RecyclerView.Adapter<CarefullyChosen
         ImageView merchantImage;
         TextView merchantName;
         TextView merchantTag;
+        TextView merchantPrice;
+        TextView merchantTimepriceTag;
+        TextView merchantTimeprice;
 
         public ViewHolder(View view) {
             super(view);
@@ -43,6 +42,9 @@ public class CarefullyChosenAdapter extends RecyclerView.Adapter<CarefullyChosen
             merchantImage = (ImageView)view.findViewById(R.id.merchant_image_view);
             merchantName = (TextView)view.findViewById(R.id.merchant_name_text_view);
             merchantTag = (TextView)view.findViewById(R.id.merchant_tag_text_view);
+            merchantPrice = (TextView)view.findViewById(R.id.merchant_price);;
+            merchantTimepriceTag = (TextView)view.findViewById(R.id.merchant_timeprice_tag);;
+            merchantTimeprice = (TextView)view.findViewById(R.id.merchant_timeprice);;
         }
     }
 
@@ -79,6 +81,16 @@ public class CarefullyChosenAdapter extends RecyclerView.Adapter<CarefullyChosen
             builder.append("#"+map.get("tagName")+" ");
         }
         holder.merchantTag.setText(builder.toString());
+        for (ProductPriceItem item : merchant.productPrice.showPriceList) {
+            if (0 == item.assetType) {
+                holder.merchantPrice.setText(item.cyCode+item.totalPrice/100);
+                holder.merchantPrice.setVisibility(View.VISIBLE);
+            } else if (4 == item.assetType) {
+                holder.merchantTimeprice.setText("￥"+item.totalPrice/100);
+                holder.merchantTimepriceTag.setVisibility(View.VISIBLE);
+                holder.merchantTimeprice.setVisibility(View.VISIBLE);
+            }
+        }
     }
 
     @Override

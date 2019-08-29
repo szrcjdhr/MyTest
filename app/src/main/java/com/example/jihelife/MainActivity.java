@@ -6,7 +6,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
-import com.example.jihelife.Home.CarefullyChosenFragment;
+import com.example.jihelife.home.CarefullyChosenFragment;
+import com.example.jihelife.market.MarketFragment;
 import com.hjm.bottomtabbar.BottomTabBar;
 
 public class MainActivity extends AppCompatActivity {
@@ -26,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
                 .setFontSize(10)//设置文字的尺寸
                 .setTabPadding(4,6,10)//设置ICON图片与上部分割线的间隔、图片与文字的间隔、文字与底部的间隔
                 .addTabItem("第一项", R.drawable.jingxuans, R.drawable.jingxuan, CarefullyChosenFragment.class)//设置文字、一张图片、fragment
-                .addTabItem("第二项", R.drawable.wodes, R.drawable.wode, TwoFragment.class)//设置文字、两张图片、fragment
+                .addTabItem("第二项", R.drawable.wodes, R.drawable.wode, MarketFragment.class)//设置文字、两张图片、fragment
                 .isShowDivider(false)//设置是否显示分割线
                 .setTabBarBackgroundColor(Color.WHITE)//设置底部导航栏颜色
                 .setOnTabChangeListener(new BottomTabBar.OnTabChangeListener() {
